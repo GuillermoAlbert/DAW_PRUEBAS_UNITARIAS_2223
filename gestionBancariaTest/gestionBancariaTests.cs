@@ -172,7 +172,7 @@ namespace gestionBancariaTest
 
         //Métodos de prueba tras implementación de excepciones.
 
-        [TestMethod]
+        [TestMethod] //GAG22-23
         public void ValidarIngresoCantidadNoValida()
         {
             double saldoInicial = 1000;
@@ -189,7 +189,7 @@ namespace gestionBancariaTest
             }
         }
 
-        [TestMethod]
+        [TestMethod] //GAG22-23
         public void ValidarReintegroMayorSaldo()
         {
             double saldoInicial = 1000;
@@ -208,7 +208,7 @@ namespace gestionBancariaTest
             }
         }
 
-        [TestMethod]
+        [TestMethod] //GAG22-23
         public void ValidarReintegroCantidadNoValida()
         {
             double saldoInicial = 1000;
