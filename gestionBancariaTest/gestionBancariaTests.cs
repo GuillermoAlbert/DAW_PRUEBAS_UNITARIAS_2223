@@ -140,7 +140,7 @@ namespace gestionBancariaTest
             // Método a probar
             Assert.AreEqual(saldoEsperado, miApp.ObtenerSaldo(), 0.001, "Se produjo un error al realizar el reintegro, saldo incorrecto.");
         }
-        */
+        
 
         //Pruebas con manejo de excepciones GAG22-23
 
@@ -149,18 +149,7 @@ namespace gestionBancariaTest
         public void validarReintegroCantidadNoValida()
         {
             double saldoInicial = 1000;
-            double reintegro = -250;
-            double saldoFinal = saldoInicial - reintegro;
-            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
-            miApp.RealizarReintegro(reintegro);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void validarReintegroMayorSaldoExcepcion()
-        {
-            double saldoInicial = 1000;
-            double reintegro = 1100;
+            double reintegro = 1250;
             double saldoFinal = saldoInicial - reintegro;
             GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
             miApp.RealizarReintegro(reintegro);
@@ -178,6 +167,64 @@ namespace gestionBancariaTest
             GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
             // Método a probar
             miApp.RealizarIngreso(ingreso);
+        }
+        */
+
+        //Métodos de prueba tras implementación de excepciones.
+
+        [TestMethod]
+        public void ValidarIngresoCantidadNoValida()
+        {
+            double saldoInicial = 1000;
+            double ingreso = -250;
+
+            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+            try
+            {
+                miApp.RealizarIngreso(ingreso);
+            }
+            catch (ArgumentException exception)
+            {
+                StringAssert.Equals(exception.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
+            }
+        }
+
+        [TestMethod]
+        public void ValidarReintegroMayorSaldo()
+        {
+            double saldoInicial = 1000;
+            double reintegro = 1500;
+            double saldoEsperado = saldoInicial - reintegro;
+
+            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+
+            try
+            {
+                miApp.RealizarReintegro(reintegro);
+            }
+            catch (ArgumentException exception)
+            {
+                StringAssert.Equals(exception.Message, GestionBancariaApp.ERR_SALDO_INSUFICIENTE);
+            }
+        }
+
+        [TestMethod]
+        public void ValidarReintegroCantidadNoValida()
+        {
+            double saldoInicial = 1000;
+            double reintegro = -250;
+            double saldoEsperado = saldoInicial - reintegro;
+
+            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+
+            try
+            {
+                miApp.RealizarReintegro(reintegro);
+            }
+            catch (ArgumentException exception)
+            {
+                StringAssert.Equals(exception.Message, GestionBancariaApp.ERR_CANTIDAD_NO_VALIDA);
+            }
         }
     }
 }
