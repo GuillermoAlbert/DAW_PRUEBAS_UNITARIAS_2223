@@ -29,21 +29,24 @@ namespace GestionBancariaAppNS
 
         public double ObtenerSaldo() { return saldo; }
 
-        public int RealizarReintegro(double cantidad) 
+        public int RealizarReintegro(double cantidad)
         {
             if (cantidad <= 0)
-                return ERR_CANTIDAD_NO_VALIDA;
+                throw new ArgumentOutOfRangeException("La cantidad indicada no es válida");
             if (saldo < cantidad)
-                return ERR_SALDO_INSUFICIENTE;
+                throw new ArgumentOutOfRangeException("Saldo insuficiente");
+
             saldo -= cantidad;
             return 0;
         }
 
-        public int RealizarIngreso(double cantidad) {
-            if (cantidad < 0)
-                return ERR_CANTIDAD_NO_VALIDA;
+        public double RealizarIngreso(double cantidad)
+        {
+            if (cantidad <= 0)
+                throw new ArgumentOutOfRangeException("La cantidad indicada no es válida");
+
             saldo += cantidad;
-            return 0;
+            return saldo;
         }
 
         private void btOperar_Click(object sender, EventArgs e)

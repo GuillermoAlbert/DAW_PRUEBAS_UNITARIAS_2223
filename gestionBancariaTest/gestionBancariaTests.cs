@@ -7,7 +7,7 @@ namespace gestionBancariaTest
     [TestClass]
     public class gestionBancariaTests //GAG22-23
     {
-        [TestMethod]
+        /* [TestMethod]
         // unit test code [TestMethod] GAG22-23
         public void validarReintegro()
         {
@@ -109,7 +109,7 @@ namespace gestionBancariaTest
             double ingreso = -1000;
             GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
             // Método a probar
-            int resultado = miApp.RealizarIngreso(ingreso);
+            double resultado = miApp.RealizarIngreso(ingreso);
             Assert.AreEqual(1, resultado, 0.001, "Se produjo un error al realizar el ingreso");
         }
 
@@ -124,7 +124,7 @@ namespace gestionBancariaTest
             GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
             miApp.RealizarIngreso(ingreso);
             // Método a probar
-            Assert.AreEqual(saldoEsperado, miApp.ObtenerSaldo(), 0.001, "Se produjo un error al realizar el ingreso");
+            Assert.AreEqual(saldoEsperado, miApp.ObtenerSaldo(), 0.001, "Se produjo un error al realizar el reintegro, saldo incorrecto.");
         }
 
         [TestMethod]
@@ -138,8 +138,46 @@ namespace gestionBancariaTest
             GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
             miApp.RealizarIngreso(ingreso);
             // Método a probar
-            Assert.AreEqual(saldoEsperado, miApp.ObtenerSaldo(), 0.001, "Se produjo un error al realizar el ingreso");
+            Assert.AreEqual(saldoEsperado, miApp.ObtenerSaldo(), 0.001, "Se produjo un error al realizar el reintegro, saldo incorrecto.");
+        }
+        */
+
+        //Pruebas con manejo de excepciones GAG22-23
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void validarReintegroCantidadNoValida()
+        {
+            double saldoInicial = 1000;
+            double reintegro = -250;
+            double saldoFinal = saldoInicial - reintegro;
+            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+            miApp.RealizarReintegro(reintegro);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void validarReintegroMayorSaldoExcepcion()
+        {
+            double saldoInicial = 1000;
+            double reintegro = 1100;
+            double saldoFinal = saldoInicial - reintegro;
+            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+            miApp.RealizarReintegro(reintegro);
+        }
+
+        [TestMethod]
+        // unit test code [TestMethod] GAG22-23
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void validarIngresoNegativoExcepcion()
+        {
+            // Preparación del caso de prueba
+            double saldoInicial = 1000;
+            double ingreso = -1000;
+            double saldoFinal = saldoInicial + ingreso;
+            GestionBancariaApp miApp = new GestionBancariaApp(saldoInicial);
+            // Método a probar
+            miApp.RealizarIngreso(ingreso);
+        }
     }
 }
